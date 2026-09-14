@@ -5,7 +5,7 @@ REFERENCIAS CANCIONES/TEMAS
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LinksSPOTIFYcron - Sincronizado</title>
+<title>REFERENCIAS - Sincronizado</title>
 <style>
   body {
     font-family: -apple-system, Segoe UI, Roboto, sans-serif;
@@ -88,7 +88,7 @@ REFERENCIAS CANCIONES/TEMAS
 <body>
 
 <div id="sheet-sync-container">
-  <h1>LinksSPOTIFYcron</h1>
+  <h1>REFERENCIAS TEMAS</h1>
   <div class="sheet-sync-header">
     <span>Última sincronización: <span id="sheet-sync-time">—</span></span>
     <button id="sheet-sync-refresh">Actualizar ahora</button>
@@ -112,6 +112,8 @@ REFERENCIAS CANCIONES/TEMAS
   const HEADER_YOUTUBE = "linkYoutube";
   const HEADER_ANIO = "Año";
   const HEADER_ALBUM = "Álbum Spotify";
+
+  const HEADER_MOISES = "setlistMoises";
 
   const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&gid=${GID}`;
 
@@ -158,6 +160,8 @@ REFERENCIAS CANCIONES/TEMAS
       const idxAnio = findColIndex(cols, HEADER_ANIO);
       const idxAlbum = findColIndex(cols, HEADER_ALBUM);
 
+      const idxMoises = findColIndex(cols, HEADER_MOISES);
+
       if (idxNombre === -1 || idxLink === -1) {
         statusEl.textContent = `No se encontraron las columnas "${HEADER_NOMBRE}" y/o "${HEADER_LINK}" en la planilla.`;
         return;
@@ -173,11 +177,15 @@ REFERENCIAS CANCIONES/TEMAS
           const albumRaw = cellValue(r, idxAlbum) || EMPTY_PLACEHOLDER;
           const esAlbumLink = /^https?:\/\//i.test(albumRaw);
 
+          const moisesRaw = cellValue(r, idxMoises);
+          
           const nombre = escapeHtml(nombreRaw);
           const link = escapeHtml(linkRaw);
           const youtube = escapeHtml(youtubeRaw);
           const anio = escapeHtml(anioRaw);
           const album = escapeHtml(albumRaw);
+          const moises = escapeHtml(moisesRaw);
+          
 
           return `
             <div class="record">
@@ -188,6 +196,9 @@ REFERENCIAS CANCIONES/TEMAS
               
               <span class="extra-field"><strong>Año:</strong> ${anio}</span>
               <span class="extra-field"><strong>Álbum Spotify:</strong> ${esAlbumLink ? `<a href="${album}" target="_blank" rel="noopener">${album}</a>` : album}</span>
+
+              <span class="extra-field"><strong>Setlist Moises: </strong><a href="${moises}" target="_blank" rel="noopener">${nombre}</a></span>
+              
               <br>
             </div>`;
         })
