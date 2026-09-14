@@ -177,8 +177,9 @@ REFERENCIAS CANCIONES/TEMAS
           const albumRaw = cellValue(r, idxAlbum) || EMPTY_PLACEHOLDER;
           const esAlbumLink = /^https?:\/\//i.test(albumRaw);
 
-          const moisesRaw = cellValue(r, idxMoises);
-          
+          const moisesRaw = cellValue(r, idxMoises); || EMPTY_PLACEHOLDER;
+
+      
           const nombre = escapeHtml(nombreRaw);
           const link = escapeHtml(linkRaw);
           const youtube = escapeHtml(youtubeRaw);
